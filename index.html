@@ -107,6 +107,13 @@
   .track { display: flex; gap: var(--gap); padding: 0 clamp(20px, 4vw, 56px); will-change: transform; }
   .step { flex: 0 0 clamp(300px, 34vw, 560px); }
   .step .media { aspect-ratio: 3 / 4; height: min(58vh, 640px); width: auto; }
+  /* depth: the track is a stage, each card turns toward the middle and sinks back at the sides; a sheen rides across */
+  .track { perspective: 1500px; perspective-origin: 50% 45%; }
+  .step { transform-style: preserve-3d; will-change: transform; }
+  .step .media { box-shadow: 0 40px 70px -40px rgba(0, 0, 0, .75); }
+  .step .media img { transition: none !important; transform: scale(1.22); will-change: transform; }
+  .step .cap, .step .num { will-change: transform; }
+  .step .sheen { position: absolute; inset: -20%; z-index: 1; pointer-events: none; background: linear-gradient(105deg, transparent 38%, rgba(255, 248, 235, .11) 50%, transparent 62%); transform: translate3d(var(--shine, 0%), 0, 0); mix-blend-mode: screen; }
   .step .media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(20, 18, 22, .7), transparent 55%); }
   .step .num { position: absolute; left: 22px; top: 18px; z-index: 2; font: 300 14px/1 var(--font-mark); letter-spacing: .2em; color: var(--parchment); }
   .step .cap { position: absolute; left: 22px; right: 22px; bottom: 22px; z-index: 2; }
@@ -253,11 +260,11 @@
   <div class="pin">
     <div class="wrap head"><div><p class="eyebrow">How a garden comes together</p><h2 style="margin-top:14px">Five steps, at the garden's pace</h2></div><span class="count" id="count">01 / 05</span></div>
     <div class="track" id="track">
-      <article class="step"><div class="media"><img src="img/about-24.jpg" alt="" loading="lazy"><span class="num">01</span><div class="cap"><h3>Listen</h3><p>A walk around the place together: how you want to live outside, where the light falls, what you love already.</p></div></div></article>
-      <article class="step"><div class="media"><img src="img/home-05.jpg" alt="" loading="lazy"><span class="num">02</span><div class="cap"><h3>Read the land</h3><p>Sun and shade, soil, slope, and where the water goes when it rains.</p></div></div></article>
-      <article class="step"><div class="media"><img src="img/home-08.jpg" alt="" loading="lazy"><span class="num">03</span><div class="cap"><h3>Design</h3><p>A plan that ties the hardscape, grading, plants, rain capture and irrigation into one garden.</p></div></div></article>
-      <article class="step"><div class="media"><img src="img/projects-15.jpg" alt="" loading="lazy"><span class="num">04</span><div class="cap"><h3>Build</h3><p>With trusted builders, on site through the details that make it feel finished.</p></div></div></article>
-      <article class="step"><div class="media"><img src="img/home-10.jpg" alt="" loading="lazy"><span class="num">05</span><div class="cap"><h3>Grow</h3><p>Seasonal care and coaching, so the soil and the garden get better every year.</p></div></div></article>
+      <article class="step"><div class="media"><img src="img/about-24.jpg" alt="" loading="lazy"><span class="sheen"></span><span class="num">01</span><div class="cap"><h3>Listen</h3><p>A walk around the place together: how you want to live outside, where the light falls, what you love already.</p></div></div></article>
+      <article class="step"><div class="media"><img src="img/home-05.jpg" alt="" loading="lazy"><span class="sheen"></span><span class="num">02</span><div class="cap"><h3>Read the land</h3><p>Sun and shade, soil, slope, and where the water goes when it rains.</p></div></div></article>
+      <article class="step"><div class="media"><img src="img/home-08.jpg" alt="" loading="lazy"><span class="sheen"></span><span class="num">03</span><div class="cap"><h3>Design</h3><p>A plan that ties the hardscape, grading, plants, rain capture and irrigation into one garden.</p></div></div></article>
+      <article class="step"><div class="media"><img src="img/projects-15.jpg" alt="" loading="lazy"><span class="sheen"></span><span class="num">04</span><div class="cap"><h3>Build</h3><p>With trusted builders, on site through the details that make it feel finished.</p></div></div></article>
+      <article class="step"><div class="media"><img src="img/home-10.jpg" alt="" loading="lazy"><span class="sheen"></span><span class="num">05</span><div class="cap"><h3>Grow</h3><p>Seasonal care and coaching, so the soil and the garden get better every year.</p></div></div></article>
     </div>
     <div class="progress"><i id="bar"></i></div>
   </div>
@@ -353,7 +360,24 @@
   // per frame: the nav reads the section under it, the process track follows the scroll, the invite drifts, the mark focuses
   const nav = document.getElementById('nav'), proc = document.querySelector('.process'), track = document.getElementById('track'), bar = document.getElementById('bar'), count = document.getElementById('count');
   const lights = [...document.querySelectorAll('.light')], invite = document.getElementById('invitebg'), mark = document.getElementById('bigmark');
-  function frame() {
+  const steps = [...document.querySelectorAll('.step')].map(st => ({ el: st, media: st.querySelector('.media'), img: st.querySelector('.media img'), cap: st.querySelector('.cap'), num: st.querySelector('.num'), x: 0, y: 0, tx: 0, ty: 0 }));
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches, touch = matchMedia('(hover: none)').matches, depth = touch ? 0.55 : 1;
+  steps.forEach(s => { s.el.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; const r = s.el.getBoundingClientRect(); s.tx = ((e.clientX - r.left) / r.width - 0.5) * 14; s.ty = -((e.clientY - r.top) / r.height - 0.5) * 10; });
+    s.el.addEventListener('pointerleave', () => { s.tx = 0; s.ty = 0; }); });
+  function depthFrame() {
+    if (calm) return; const cx = innerWidth / 2;
+    for (const s of steps) {
+      const r = s.el.getBoundingClientRect(); if (r.right < -200 || r.left > innerWidth + 200) continue;
+      const d = Math.max(-1.2, Math.min(1.2, (r.left + r.width / 2 - cx) / innerWidth)) * depth;
+      s.x += (s.tx - s.x) * 0.1; s.y += (s.ty - s.y) * 0.1;  // the tilt follows the mouse with a soft lag
+      s.el.style.transform = `rotateY(${(-d * 18 + s.x).toFixed(2)}deg) rotateX(${s.y.toFixed(2)}deg) translateZ(${(-Math.abs(d) * 160).toFixed(1)}px)`;
+      s.img.style.transform = `translate3d(${(d * -80 - s.x * 2.2).toFixed(1)}px, ${(s.y * 2.2).toFixed(1)}px, 0) scale(1.22)`;
+      s.cap.style.transform = `translate3d(${(d * 40 + s.x * 1.4).toFixed(1)}px, ${(-s.y * 1.2).toFixed(1)}px, 0)`;
+      s.num.style.transform = `translate3d(${(d * 24 + s.x).toFixed(1)}px, 0, 0)`;
+      s.media.style.setProperty('--shine', `${(d * -70 + s.x * 5).toFixed(1)}%`);
+    }
+  }
+  function frame() { depthFrame();
     const y = scrollY, H = innerHeight;
     nav.classList.toggle('solid', y > H * 0.6);
     nav.classList.toggle('on-light', lights.some(l => { const r = l.getBoundingClientRect(); return r.top <= 40 && r.bottom >= 40; }));

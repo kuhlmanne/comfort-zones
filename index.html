@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow"><!-- a review draft: search engines leave it alone until it moves to czgardens.com -->
+<title>Comfort Zones · Garden Design by Marilee Kuhlmann</title>
+<meta name="description" content="Comfort Zones designs water-wise gardens for Southern California: shaded, alive with birds and bees, beautiful through the dry months, and built to keep the rain.">
+<!-- Draft, 2026-10-21. Motion from the site-kingriver skill (Art Globe): Lenis smooth scroll (a flick settles in about 0.65 s),
+     arrivals that rise 42 px and fade in on cubic-bezier(0.22, 1, 0.36, 1), pictures that settle from a slow zoom, a pinned
+     sideways track, an intro curtain, a wordmark that comes into focus. Colours measured from Marilee's own garden photographs
+     and her sage brand green. Photographs from Urban Water Group's site (img/sources.json, img/projects/projects.json), many by Saxon Holt. -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&display=swap">
+<style>
+  :root {
+    /* her colours, measured from her gardens at dusk and in daylight */
+    --night: #23271f;      /* eucalyptus shade, the dark sections */
+    --dusk: #382e40;       /* the plum of her evening skies, the intro and the about band */
+    --sand: #ebe3d6;       /* decomposed granite, the light sections */
+    --parchment: #f6f1e8;  /* paper for text on dark */
+    --sage: #7cb68b;       /* her brand green */
+    --olive: #4d5c41;      /* leaf, for text accents on sand */
+    --rust: #b4532e;       /* aloe flowers, the cushions by the fire */
+    --lavender: #8992c0;   /* the sky after sunset */
+    --gold: #c29f3c;
+    --font-mark: 'Lato', Helvetica, Arial, sans-serif;
+    --font-text: 'Newsreader', Georgia, serif;
+    /* motion, measured on kingriver.com.au */
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --dur-in: 0.95s; --rise: 42px; --dur-hover: 0.45s;
+    --width: 1600px; --gap: clamp(16px, 2.2vw, 32px); --pad: clamp(72px, 12vh, 140px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--night); }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  body { background: var(--night); color: var(--parchment); font: 400 18px/1.6 var(--font-text); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  .wrap { max-width: var(--width); margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+  .eyebrow { font: 700 13px/1.2 var(--font-mark); letter-spacing: .18em; text-transform: uppercase; }
+  .mark { font: 300 clamp(15px, 1.2vw, 18px)/1 var(--font-mark); letter-spacing: .22em; text-transform: uppercase; }
+  h1, h2, h3 { font-family: var(--font-mark); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; line-height: 1.08; }
+  h1 { font-size: clamp(34px, 3.6vw, 58px); }
+  h2 { font-size: clamp(26px, 2.6vw, 40px); }
+  h3 { font-size: clamp(17px, 1.3vw, 20px); letter-spacing: .08em; }
+  .say { font: 300 clamp(30px, 3.4vw, 58px)/1.14 var(--font-text); letter-spacing: -.01em; }
+  .say em { font-style: italic; color: var(--sage); }
+
+  /* the intro curtain: her dusk plum, the mark, then it lifts */
+  #curtain { position: fixed; inset: 0; z-index: 50; background: var(--dusk); display: grid; place-items: center; transition: opacity .9s var(--ease) .2s, visibility 0s linear 1.2s; }
+  #curtain .mark { color: var(--parchment); opacity: 0; transform: translateY(14px); animation: markin 1s var(--ease) .15s forwards; font-size: clamp(18px, 2vw, 28px); }
+  #curtain .mark b { color: var(--sage); font-weight: 300; }
+  body.ready #curtain { opacity: 0; visibility: hidden; }
+  @keyframes markin { to { opacity: 1; transform: none; } }
+
+  /* nav: light over the photographs, it reads on sand too */
+  nav { position: fixed; inset: 0 0 auto; z-index: 20; display: flex; justify-content: space-between; align-items: center; padding: 26px clamp(20px, 4vw, 56px); color: var(--parchment); transition: color .5s var(--ease), background .5s var(--ease), padding .5s var(--ease); }
+  nav.on-light { color: var(--night); }
+  nav.solid { background: color-mix(in srgb, var(--night) 82%, transparent); backdrop-filter: blur(10px); padding-top: 16px; padding-bottom: 16px; }
+  nav.solid.on-light { background: color-mix(in srgb, var(--sand) 88%, transparent); }
+  nav .mark b { color: var(--sage); font-weight: 300; }
+  nav ul { display: flex; gap: clamp(18px, 2.4vw, 40px); list-style: none; }
+  nav ul a { font: 700 12px/1 var(--font-mark); letter-spacing: .16em; text-transform: uppercase; text-decoration: none; position: relative; padding: 6px 0; transition: opacity .2s ease; }
+  nav ul a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform var(--dur-hover) cubic-bezier(0.33, 1, 0.68, 1); }
+  nav ul a:hover { opacity: .7; } nav ul a:hover::after { transform: scaleX(1); transform-origin: left; }
+  .menu { display: none; background: none; border: 0; color: inherit; font: 700 12px/1 var(--font-mark); letter-spacing: .16em; text-transform: uppercase; }
+
+  /* the hero: her evening gardens, crossfading under a slow zoom */
+  .hero { position: relative; height: 100svh; min-height: 620px; overflow: hidden; }
+  .hero .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 2.2s ease; }
+  .hero .slide.on { opacity: 1; }
+  .hero .slide img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.14); transition: transform 9s linear; }
+  .hero .slide.on img { transform: scale(1.02); }
+  .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(20, 18, 22, .78), rgba(20, 18, 22, .08) 55%, rgba(20, 18, 22, .35)); }
+  .hero .copy { position: absolute; inset: auto 0 0; z-index: 2; padding-bottom: clamp(40px, 9vh, 96px); display: grid; grid-template-columns: 1.1fr .9fr; gap: var(--gap); align-items: end; }
+  .hero .copy > p { font-size: clamp(16px, 1.15vw, 19px); max-width: 42ch; justify-self: end; color: color-mix(in srgb, var(--parchment) 88%, transparent); }
+  .hero .eyebrow { color: var(--sage); margin-bottom: 18px; }
+  .scrollcue { position: absolute; left: 50%; bottom: 26px; z-index: 2; width: 1px; height: 54px; background: color-mix(in srgb, var(--parchment) 30%, transparent); overflow: hidden; }
+  .scrollcue::after { content: ''; position: absolute; inset: 0; background: var(--parchment); transform: translateY(-100%); animation: cue 2.4s var(--ease) infinite; }
+  @keyframes cue { 60%, 100% { transform: translateY(100%); } }
+
+  section { position: relative; }
+  .light { background: var(--sand); color: var(--night); }
+  .light .eyebrow { color: var(--olive); }
+  .pad { padding: var(--pad) 0; }
+
+  /* approach: one sentence said big, a picture, four promises */
+  .approach .top { display: grid; grid-template-columns: 1fr 1.25fr; gap: clamp(28px, 5vw, 96px); align-items: start; }
+  .approach .say em { color: var(--rust); }
+  .media { position: relative; overflow: hidden; border-radius: 2px; background: var(--olive); }
+  .media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); transition: transform 1.8s var(--ease); }
+  .media.in img { transform: scale(1); }
+  .approach .media { aspect-ratio: 4 / 5; }
+  .pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); margin-top: clamp(56px, 9vh, 110px); border-top: 1px solid color-mix(in srgb, var(--night) 18%, transparent); padding-top: 32px; }
+  .pillars .n { font: 300 13px/1 var(--font-mark); letter-spacing: .2em; color: var(--rust); margin-bottom: 18px; display: block; }
+  .pillars h3 { margin-bottom: 12px; }
+  .pillars p { font-size: 17px; color: color-mix(in srgb, var(--night) 78%, transparent); }
+
+  /* the process: pinned while it travels sideways, one step a screen */
+  .process { background: var(--night); }
+  .process .pin { position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
+  .process .head { width: 100%; display: flex; justify-content: space-between; align-items: end; margin-bottom: clamp(24px, 4vh, 48px); }
+  .process .head .eyebrow { color: var(--sage); }
+  .process .count { font: 300 14px/1 var(--font-mark); letter-spacing: .2em; color: color-mix(in srgb, var(--parchment) 60%, transparent); }
+  .track { display: flex; gap: var(--gap); padding: 0 clamp(20px, 4vw, 56px); will-change: transform; }
+  .step { flex: 0 0 clamp(300px, 34vw, 560px); }
+  .step .media { aspect-ratio: 3 / 4; height: min(58vh, 640px); width: auto; }
+  .step .media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(20, 18, 22, .7), transparent 55%); }
+  .step .num { position: absolute; left: 22px; top: 18px; z-index: 2; font: 300 14px/1 var(--font-mark); letter-spacing: .2em; color: var(--parchment); }
+  .step .cap { position: absolute; left: 22px; right: 22px; bottom: 22px; z-index: 2; }
+  .step .cap h3 { margin-bottom: 8px; color: var(--parchment); }
+  .step .cap p { font-size: 16px; line-height: 1.5; color: color-mix(in srgb, var(--parchment) 85%, transparent); }
+  .progress { height: 1px; background: color-mix(in srgb, var(--parchment) 18%, transparent); margin: clamp(22px, 4vh, 40px) clamp(20px, 4vw, 56px) 0; }
+  .progress i { display: block; height: 100%; width: 100%; background: var(--sage); transform-origin: left; transform: scaleX(0); }
+
+  /* the gardens: a field of photographs, each settling as it arrives */
+  .gardens .head { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); align-items: end; margin-bottom: clamp(40px, 7vh, 80px); }
+  .gardens .head p { max-width: 46ch; justify-self: end; color: color-mix(in srgb, var(--night) 78%, transparent); }
+  .projects { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(28px, 4vw, 56px) var(--gap); align-items: end; }
+  .proj { cursor: pointer; }
+  .proj .media { border-radius: 2px; }
+  .proj .open { position: absolute; right: 14px; bottom: 14px; z-index: 2; padding: 9px 16px; border-radius: 9999px; background: color-mix(in srgb, var(--night) 70%, transparent); backdrop-filter: blur(6px); color: var(--parchment); font: 700 11px/1 var(--font-mark); letter-spacing: .14em; text-transform: uppercase; opacity: 0; transform: translateY(8px); transition: opacity var(--dur-hover) var(--ease), transform var(--dur-hover) var(--ease); }
+  .proj:hover .open, .proj:focus-visible .open { opacity: 1; transform: none; }
+  .proj:hover .media img { transform: scale(1.04); transition-duration: 1.2s; }
+  .proj .meta { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-top: 16px; }
+  .proj .meta span { font: 700 11px/1.4 var(--font-mark); letter-spacing: .16em; text-transform: uppercase; color: var(--olive); white-space: nowrap; }
+  .proj p { margin-top: 8px; font-size: 16px; line-height: 1.5; max-width: 52ch; color: color-mix(in srgb, var(--night) 72%, transparent); }
+  .credit { margin-top: clamp(48px, 8vh, 90px); font: 400 13px/1.5 var(--font-mark); letter-spacing: .06em; color: color-mix(in srgb, var(--night) 60%, transparent); }
+
+  /* a garden opened: its photographs one at a time, crossfading, each settling from a slight zoom */
+  #gallery { position: fixed; inset: 0; z-index: 40; display: grid; grid-template-columns: 1fr minmax(300px, 380px); background: var(--night); color: var(--parchment); opacity: 0; transition: opacity .6s var(--ease); }
+  #gallery[hidden] { display: none; } #gallery.on { opacity: 1; }
+  .gstage { position: relative; overflow: hidden; background: #111; }
+  .gstage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; transform: scale(1.04); transition: opacity .8s var(--ease), transform 1.6s var(--ease); }
+  .gstage img.show { opacity: 1; transform: none; }
+  .gside { padding: clamp(28px, 5vh, 56px) clamp(22px, 2.4vw, 40px); display: flex; flex-direction: column; gap: 14px; overflow: auto; }
+  .gside .eyebrow { color: var(--sage); margin-top: 40px; }
+  .gside h2 { font-size: clamp(22px, 2vw, 30px); }
+  .gside p { font-size: 16px; line-height: 1.55; color: color-mix(in srgb, var(--parchment) 85%, transparent); }
+  .gcount { font: 300 13px/1 var(--font-mark) !important; letter-spacing: .2em; }
+  .gcredit { font: 400 12px/1.4 var(--font-mark) !important; letter-spacing: .06em; color: color-mix(in srgb, var(--parchment) 55%, transparent) !important; }
+  .gnav { display: flex; gap: 10px; }
+  .gnav button, .gclose { width: 52px; height: 52px; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--parchment) 30%, transparent); background: none; color: var(--parchment); font-size: 20px; cursor: pointer; transition: background var(--dur-hover) var(--ease), color var(--dur-hover) var(--ease); }
+  .gnav button:hover { background: var(--sage); color: var(--night); border-color: var(--sage); }
+  .gclose { position: absolute; top: 22px; right: 22px; width: auto; padding: 0 20px; border-radius: 9999px; font: 700 12px/1 var(--font-mark); letter-spacing: .16em; text-transform: uppercase; }
+  .gclose:hover { background: var(--parchment); color: var(--night); }
+  .gthumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
+  .gthumbs img { width: 100%; aspect-ratio: 1; object-fit: cover; opacity: .45; cursor: pointer; transition: opacity .3s ease; border-radius: 2px; }
+  .gthumbs img.on, .gthumbs img:hover { opacity: 1; }
+
+  /* recognition: a quiet band of where her gardens have been seen */
+  .seen { background: var(--dusk); }
+  .seen .row { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(28px, 5vw, 96px); align-items: center; }
+  .seen .media { aspect-ratio: 5 / 4; }
+  .seen .eyebrow { color: var(--lavender); }
+  .seen ul { list-style: none; margin-top: 36px; }
+  .seen li { display: grid; grid-template-columns: 70px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid color-mix(in srgb, var(--parchment) 14%, transparent); font-size: 18px; line-height: 1.45; }
+  .seen li b { font: 300 13px/1.6 var(--font-mark); letter-spacing: .16em; color: var(--lavender); }
+
+  /* about: Marilee */
+  .about .row { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(28px, 6vw, 120px); align-items: center; }
+  .about .media { aspect-ratio: 1; max-width: 520px; border-radius: 50% 50% 2px 2px; }
+  .about p { font-size: clamp(17px, 1.2vw, 20px); max-width: 52ch; margin-top: 22px; color: color-mix(in srgb, var(--night) 82%, transparent); }
+  .about p.say { margin-top: 18px; font: 300 clamp(28px, 2.8vw, 46px)/1.16 var(--font-text); color: var(--night); max-width: 24ch; }
+
+  /* the invitation, over a garden at dusk */
+  .invite { position: relative; min-height: 92svh; display: grid; align-content: center; overflow: hidden; text-align: center; }
+  .invite .bg { position: absolute; inset: -12% 0; }
+  .invite .bg img { width: 100%; height: 100%; object-fit: cover; }
+  .invite::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, color-mix(in srgb, var(--dusk) 78%, transparent), color-mix(in srgb, var(--dusk) 52%, transparent)); }
+  .invite .wrap { position: relative; z-index: 2; }
+  .invite .say { max-width: 18ch; margin: 18px auto 40px; }
+  .invite .eyebrow { color: var(--sage); }
+  .btn { display: inline-flex; align-items: center; gap: 12px; padding: 18px 34px; border-radius: 9999px; background: var(--sage); color: var(--night); text-decoration: none; font: 700 13px/1 var(--font-mark); letter-spacing: .16em; text-transform: uppercase; transition: transform var(--dur-hover) var(--ease), background var(--dur-hover) var(--ease); }
+  .btn:hover { transform: translateY(-3px); background: var(--parchment); }
+  .btn span { transition: transform var(--dur-hover) var(--ease); } .btn:hover span { transform: translateX(5px); }
+
+  /* the footer: her name, out of focus until you reach it */
+  footer { background: var(--night); padding: clamp(60px, 10vh, 110px) 0 32px; overflow: hidden; }
+  footer .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); font-size: 16px; color: color-mix(in srgb, var(--parchment) 75%, transparent); }
+  footer .cols b { display: block; font: 700 11px/1 var(--font-mark); letter-spacing: .18em; text-transform: uppercase; color: var(--sage); margin-bottom: 14px; }
+  .bigmark { margin-top: clamp(50px, 9vh, 100px); font: 300 clamp(48px, 10.6vw, 190px)/.9 var(--font-mark); letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; color: var(--parchment); filter: blur(var(--blur, 14px)); opacity: var(--fade, .25); text-align: center; }
+  .fine { display: flex; justify-content: space-between; margin-top: 28px; font: 400 12px/1.4 var(--font-mark); letter-spacing: .08em; color: color-mix(in srgb, var(--parchment) 45%, transparent); }
+
+  /* arrivals: hidden until on screen, then they rise 42 px and fade in, each a beat after the one before */
+  [data-in] { opacity: 0; transform: translateY(var(--rise)); transition: opacity var(--dur-in) var(--ease), transform var(--dur-in) var(--ease); transition-delay: calc(var(--i, 0) * 90ms); }
+  [data-in].in { opacity: 1; transform: none; }
+  .line { display: block; overflow: hidden; }
+  .line > span { display: block; transform: translateY(105%); transition: transform 1.1s var(--ease); transition-delay: calc(var(--i, 0) * 110ms + .1s); }
+  .in .line > span, .line.in > span { transform: none; }
+
+  @media (max-width: 900px) {
+    nav ul { display: none; } .menu { display: block; position: relative; z-index: 2; }
+    nav.open { color: var(--parchment); } nav.open ul { display: flex; position: fixed; inset: 0; flex-direction: column; justify-content: center; align-items: center; gap: 34px; background: var(--dusk); }
+    nav.open ul a { font-size: 18px; }
+      .hero .copy, .approach .top, .gardens .head, .seen .row, .about .row { grid-template-columns: 1fr; }
+    .hero .copy > p { justify-self: start; }
+    .pillars { grid-template-columns: 1fr 1fr; row-gap: 40px; }
+    .proj { grid-column: 1 / -1 !important; }
+    #gallery { grid-template-columns: 1fr; grid-template-rows: 58vh 1fr; } .gside .eyebrow { margin-top: 0; } .gthumbs { grid-template-columns: repeat(5, 1fr); }
+    .step { flex-basis: 78vw; } .step .media { height: 54vh; }
+    footer .cols { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-in], .line > span { opacity: 1; transform: none; transition: none; }
+    .media img, .hero .slide img { transform: none !important; transition: none; }
+    .bigmark { filter: none; opacity: 1; }
+  }
+</style>
+</head>
+<body>
+<div id="curtain"><span class="mark">Comfort <b>Zones</b></span></div>
+
+<nav id="nav">
+  <a class="mark" href="#top" style="text-decoration:none">Comfort <b>Zones</b></a>
+  <ul><li><a href="#approach">Approach</a></li><li><a href="#process">Process</a></li><li><a href="#gardens">Gardens</a></li><li><a href="#about">Marilee</a></li><li><a href="#contact">Contact</a></li></ul>
+  <button class="menu" type="button" aria-label="menu">Menu</button>
+</nav>
+
+<header class="hero" id="top">
+  <div class="slide on"><img src="img/home-01.jpg" alt="A fire circle among aloes and succulents at dusk, hills behind"></div>
+  <div class="slide"><img src="img/home-06.jpg" alt="An aloe in flower over silver salvia in evening light"></div>
+  <div class="slide"><img src="img/home-04.jpg" alt="A boulder in golden grasses at sunset"></div>
+  <div class="wrap copy">
+    <div><p class="eyebrow" data-in>Garden design · Los Angeles</p><h1><span class="line"><span>Gardens that</span></span><span class="line" style="--i:1"><span>hold you.</span></span></h1></div>
+    <p data-in style="--i:3">Comfort Zones designs gardens for Southern California as it is now: shaded, alive with birds and bees, beautiful through the dry months, and built to keep the rain when it comes.</p>
+  </div>
+  <div class="scrollcue"></div>
+</header>
+
+<section class="light pad approach" id="approach">
+  <div class="wrap">
+    <div class="top">
+      <div class="media" data-in><img src="img/projects-17.jpg" alt="A bluestone path and a stone bench among salvias and yellow daisies" loading="lazy"></div>
+      <div>
+        <p class="eyebrow" data-in>The approach</p>
+        <p class="say" data-in style="--i:1;margin-top:22px">A garden should feel like the most comfortable room of the house, <em>and ask very little water to stay that way.</em></p>
+        <p data-in style="--i:2;margin-top:32px;max-width:48ch;color:color-mix(in srgb,var(--night) 78%,transparent)">Not a desert, and not a lawn. A place with shade to sit in and shelter from the wind, cooler than the street, full of life, that looks after itself through a long summer and a short winter.</p>
+      </div>
+    </div>
+    <div class="pillars">
+      <div data-in><span class="n">01</span><h3>Shade and shelter</h3><p>Trees and walls placed so the garden is the coolest room you own by July.</p></div>
+      <div data-in style="--i:1"><span class="n">02</span><h3>Rain that stays</h3><p>Roofs, slopes and paths that send the winter rain into the ground and into cisterns, not the gutter.</p></div>
+      <div data-in style="--i:2"><span class="n">03</span><h3>Living soil, living garden</h3><p>Healthy soil, native and climate-wise plants, and food and cover for birds, bees and butterflies.</p></div>
+      <div data-in style="--i:3"><span class="n">04</span><h3>Beautiful every month</h3><p>Grasses that catch the low sun, aloes that flower in winter, colour that does not depend on the hose.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="pin">
+    <div class="wrap head"><div><p class="eyebrow">How a garden comes together</p><h2 style="margin-top:14px">Five steps, at the garden's pace</h2></div><span class="count" id="count">01 / 05</span></div>
+    <div class="track" id="track">
+      <article class="step"><div class="media"><img src="img/about-24.jpg" alt="" loading="lazy"><span class="num">01</span><div class="cap"><h3>Listen</h3><p>A walk around the place together: how you want to live outside, where the light falls, what you love already.</p></div></div></article>
+      <article class="step"><div class="media"><img src="img/home-05.jpg" alt="" loading="lazy"><span class="num">02</span><div class="cap"><h3>Read the land</h3><p>Sun and shade, soil, slope, and where the water goes when it rains.</p></div></div></article>
+      <article class="step"><div class="media"><img src="img/home-08.jpg" alt="" loading="lazy"><span class="num">03</span><div class="cap"><h3>Design</h3><p>A plan that ties the hardscape, grading, plants, rain capture and irrigation into one garden.</p></div></div></article>
+      <article class="step"><div class="media"><img src="img/projects-15.jpg" alt="" loading="lazy"><span class="num">04</span><div class="cap"><h3>Build</h3><p>With trusted builders, on site through the details that make it feel finished.</p></div></div></article>
+      <article class="step"><div class="media"><img src="img/home-10.jpg" alt="" loading="lazy"><span class="num">05</span><div class="cap"><h3>Grow</h3><p>Seasonal care and coaching, so the soil and the garden get better every year.</p></div></div></article>
+    </div>
+    <div class="progress"><i id="bar"></i></div>
+  </div>
+</section>
+
+<section class="light pad gardens" id="gardens">
+  <div class="wrap">
+    <div class="head"><div><p class="eyebrow" data-in>Gardens</p><h2 data-in style="--i:1;margin-top:14px">Lush, and thrifty with water</h2></div><p data-in style="--i:2">Hillsides, courtyards, parkways and medians across Los Angeles: each one planted for this climate, and for the people who live with it. Open one to walk through it.</p></div>
+    <div class="projects">
+      <article class="proj" style="grid-column:span 7" data-p="0" data-in><div class="media" style="aspect-ratio:16 / 10"><img src="img/projects/brentwood-08.jpg" alt="Resilient in Brentwood, Mandeville Canyon" loading="lazy"><span class="open">21 photos →</span></div><div class="meta"><h3>Resilient in Brentwood</h3><span>Mandeville Canyon</span></div><p>A two-acre hilltop made fire-wise and water-thrifty: climate-wise planting, rain gardens along the frontage, water stored underground.</p></article>
+      <article class="proj" style="grid-column:span 5" data-p="1" data-in><div class="media" style="aspect-ratio:4 / 5"><img src="img/projects/century-city-2-01.jpg" alt="A Tudor on a Hillside, Century City" loading="lazy"><span class="open">7 photos →</span></div><div class="meta"><h3>A Tudor on a Hillside</h3><span>Century City</span></div><p>A Southern California English country garden: Catalina ironwoods, a Forest Pansy redbud, sycamores shading the parkway rain gardens.</p></article>
+      <article class="proj" style="grid-column:span 4" data-p="2" data-in><div class="media" style="aspect-ratio:4 / 5"><img src="img/projects/palms-01.jpg" alt="Ocean Friendly Garden, Palms" loading="lazy"><span class="open">5 photos →</span></div><div class="meta"><h3>Ocean Friendly Garden</h3><span>Palms</span></div><p>Natives and succulents feeding wildlife, a Certified Wildlife Habitat that sinks 1,500 gallons of roof water per inch of rain.</p></article>
+      <article class="proj" style="grid-column:span 4" data-p="3" data-in><div class="media" style="aspect-ratio:4 / 5"><img src="img/projects/bungalow-05.jpg" alt="A Water-Wise Bungalow, Santa Monica" loading="lazy"><span class="open">20 photos →</span></div><div class="meta"><h3>A Water-Wise Bungalow</h3><span>Santa Monica</span></div><p>A lawn turned courtyard: a bluestone path whose pebble joints let the rain into a garden of yerba mansa and cape rush.</p></article>
+      <article class="proj" style="grid-column:span 4" data-p="4" data-in><div class="media" style="aspect-ratio:4 / 5"><img src="img/projects/spanish-05.jpg" alt="A Spanish-Themed Garden, Santa Monica" loading="lazy"><span class="open">9 photos →</span></div><div class="meta"><h3>A Spanish-Themed Garden</h3><span>Santa Monica</span></div><p>An undulating wall and lanterns from the street to the door, two rain gardens, a dry courtyard of manzanita within.</p></article>
+      <article class="proj" style="grid-column:span 5" data-p="5" data-in><div class="media" style="aspect-ratio:4 / 5"><img src="img/projects/century-city-1-02.jpg" alt="Terraces on a Hillside, Century City" loading="lazy"><span class="open">17 photos →</span></div><div class="meta"><h3>Terraces on a Hillside</h3><span>Century City</span></div><p>An unusable slope turned into flowering terraces for dining and conversation, with a pergola, a waterfall and a bird-friendly fountain.</p></article>
+      <article class="proj" style="grid-column:span 7" data-p="6" data-in><div class="media" style="aspect-ratio:16 / 10"><img src="img/projects/palisades-04.jpg" alt="Pacific Palisades Modern, Pacific Palisades" loading="lazy"><span class="open">10 photos →</span></div><div class="meta"><h3>Pacific Palisades Modern</h3><span>Pacific Palisades</span></div><p>A modern house above the coast softened into its hillside: a meadow around an orchard, aloes and grass trees at the door.</p></article>
+      <article class="proj" style="grid-column:span 4" data-p="7" data-in><div class="media" style="aspect-ratio:4 / 5"><img src="img/projects/english-03.jpg" alt="English Country Garden, Santa Monica" loading="lazy"><span class="open">6 photos →</span></div><div class="meta"><h3>English Country Garden</h3><span>Santa Monica</span></div><p>A front lawn turned flowering meadow that changes all year, with a rain garden to keep the winter storms.</p></article>
+      <article class="proj" style="grid-column:span 4" data-p="8" data-in><div class="media" style="aspect-ratio:4 / 5"><img src="img/projects/sm-median-01.jpg" alt="Santa Monica Boulevard Median, Century City" loading="lazy"><span class="open">7 photos →</span></div><div class="meta"><h3>Santa Monica Boulevard Median</h3><span>Century City</span></div><p>Sixteen thousand square feet of median renewed around its plane trees: curving mat rush, blue chalk sticks, half the species native.</p></article>
+      <article class="proj" style="grid-column:span 4" data-p="9" data-in><div class="media" style="aspect-ratio:4 / 5"><img src="img/projects/stormcatcher-06.jpg" alt="Stormcatcher Cisterns, Los Angeles" loading="lazy"><span class="open">6 photos →</span></div><div class="meta"><h3>Stormcatcher Cisterns</h3><span>Los Angeles</span></div><p>With TreePeople and the city: rain tanks and drought-resilient yards at six homes, a pilot for water from the sky instead of from far away.</p></article>
+      <article class="proj" style="grid-column:span 12" data-p="10" data-in><div class="media" style="aspect-ratio:21 / 9"><img src="img/projects/las-virgenes-07.jpg" alt="Pure Water Sustainability Garden, Las Virgenes-Triunfo" loading="lazy"><span class="open">23 photos →</span></div><div class="meta"><h3>Pure Water Sustainability Garden</h3><span>Las Virgenes-Triunfo</span></div><p>Garden rooms around a water purification facility: lawn alternatives, rain gardens and an outdoor classroom. ASLA Southern California award, 2021.</p></article>
+    </div>
+    <p class="credit" data-in>Gardens designed by Marilee Kuhlmann with Urban Water Group. Photographs by Saxon Holt and Urban Water Group.</p>
+  </div>
+</section>
+
+<section class="seen pad">
+  <div class="wrap row">
+    <div class="media" data-in><img src="img/home-11.jpg" alt="Red-hot pokers and blue chalksticks along a planted median" loading="lazy"></div>
+    <div>
+      <p class="eyebrow" data-in>Where her gardens have been seen</p>
+      <p class="say" data-in style="--i:1;margin-top:18px">Sunset, the Los Angeles Times and <em>Pacific Horticulture</em>.</p>
+      <ul>
+        <li data-in><b>2025</b>Quality of Life Design Award, American Society of Landscape Architects, Southern California, for a stormwater meadow restoration</li>
+        <li data-in style="--i:1"><b>2021</b>Quality of Life Design Award, ASLA Southern California, for the Las Virgenes-Triunfo sustainability garden</li>
+        <li data-in style="--i:2"><b>2019</b>The Los Angeles Times on a rain garden in Brentwood</li>
+        <li data-in style="--i:3"><b>2018</b>Quality of Life Design Award, ASLA Southern California, residential, Resilient in Brentwood</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="light pad about" id="about">
+  <div class="wrap row">
+    <div class="media" data-in><img src="img/marilee.jpg" alt="Marilee Kuhlmann" loading="lazy" style="object-position:50% 22%"></div>
+    <div>
+      <p class="eyebrow" data-in>Marilee Kuhlmann</p>
+      <p class="say" data-in style="--i:1">A landscape consultant and sustainable garden designer who believes a beautiful garden and a thrifty one are <em>the same garden.</em></p>
+      <p data-in style="--i:2">She teaches edible gardening, water conservation and sustainable design, is a past district president of the Association of Professional Landscape Designers, and founded the Green Gardens Tour to benefit Santa Monica's kids. She has served on the Los Angeles Community Forest Advisory Committee and the board of the Southern California Horticultural Society, and writes on water-wise design for Pacific Horticulture and California Landscape Design. Comfort Zones is her studio.</p>
+    </div>
+  </div>
+</section>
+
+<section class="invite" id="contact">
+  <div class="bg" id="invitebg"><img src="img/projects-16.jpg" alt="" loading="lazy"></div>
+  <div class="wrap">
+    <p class="eyebrow" data-in>Begin</p>
+    <p class="say" data-in style="--i:1">Let's find your <em>comfort zone.</em></p>
+    <a class="btn" href="mailto:marilee@czgardens.com?subject=A%20garden%20conversation" data-in style="--i:2">Start a conversation <span>→</span></a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div><b>Studio</b>Comfort Zones Garden Design<br>Los Angeles, California</div>
+      <div><b>Services</b>Garden design · Rainwater harvesting<br>Edible gardens · Consultation and coaching</div>
+      <div><b>Write</b><a href="mailto:marilee@czgardens.com">marilee@czgardens.com</a></div>
+    </div>
+    <div class="bigmark" id="bigmark">Comfort Zones</div>
+    <div class="fine"><span>© Comfort Zones Garden Design</span><span>Gardens for the climate we have</span></div>
+  </div>
+</footer>
+
+<div id="gallery" hidden aria-modal="true" role="dialog">
+  <div class="gstage"><img id="gimg" alt=""><img id="gimg2" alt=""></div>
+  <div class="gside"><p class="eyebrow" id="gplace"></p><h2 id="gname"></h2><p id="gline"></p><p class="gcount" id="gcount"></p><p class="gcredit" id="gcredit"></p>
+    <div class="gnav"><button type="button" id="gprev" aria-label="previous photo">←</button><button type="button" id="gnext" aria-label="next photo">→</button></div>
+    <div class="gthumbs" id="gthumbs"></div></div>
+  <button type="button" class="gclose" id="gclose" aria-label="close">Close ×</button>
+</div>
+<script>const PROJECTS = [{"slug": "brentwood", "name": "Resilient in Brentwood", "place": "Mandeville Canyon", "line": "A two-acre hilltop made fire-wise and water-thrifty: climate-wise planting, rain gardens along the frontage, water stored underground.", "files": ["brentwood-01.jpg", "brentwood-02.jpg", "brentwood-03.jpg", "brentwood-04.jpg", "brentwood-05.jpg", "brentwood-06.jpg", "brentwood-07.jpg", "brentwood-08.jpg", "brentwood-09.jpg", "brentwood-10.jpg", "brentwood-11.jpg", "brentwood-12.jpg", "brentwood-13.jpg", "brentwood-14.jpg", "brentwood-15.jpg", "brentwood-16.jpg", "brentwood-17.jpg", "brentwood-18.jpg", "brentwood-19.jpg", "brentwood-20.jpg", "brentwood-21.jpg"], "credit": "Photographs by Saxon Holt"}, {"slug": "century-city-2", "name": "A Tudor on a Hillside", "place": "Century City", "line": "A Southern California English country garden: Catalina ironwoods, a Forest Pansy redbud, sycamores shading the parkway rain gardens.", "files": ["century-city-2-01.jpg", "century-city-2-02.jpg", "century-city-2-03.jpg", "century-city-2-04.jpg", "century-city-2-05.jpg", "century-city-2-06.jpg", "century-city-2-07.jpg"], "credit": "Photographs by Saxon Holt"}, {"slug": "palms", "name": "Ocean Friendly Garden", "place": "Palms", "line": "Natives and succulents feeding wildlife, a Certified Wildlife Habitat that sinks 1,500 gallons of roof water per inch of rain.", "files": ["palms-01.jpg", "palms-02.jpg", "palms-03.jpg", "palms-04.jpg", "palms-05.jpg"], "credit": "Photographs by Saxon Holt"}, {"slug": "bungalow", "name": "A Water-Wise Bungalow", "place": "Santa Monica", "line": "A lawn turned courtyard: a bluestone path whose pebble joints let the rain into a garden of yerba mansa and cape rush.", "files": ["bungalow-01.jpg", "bungalow-02.jpg", "bungalow-03.jpg", "bungalow-04.jpg", "bungalow-05.jpg", "bungalow-06.jpg", "bungalow-07.jpg", "bungalow-08.jpg", "bungalow-09.jpg", "bungalow-10.jpg", "bungalow-11.jpg", "bungalow-12.jpg", "bungalow-13.jpg", "bungalow-14.jpg", "bungalow-15.jpg", "bungalow-16.jpg", "bungalow-17.jpg", "bungalow-18.jpg", "bungalow-19.jpg", "bungalow-20.jpg"], "credit": "Photographs by Saxon Holt"}, {"slug": "spanish", "name": "A Spanish-Themed Garden", "place": "Santa Monica", "line": "An undulating wall and lanterns from the street to the door, two rain gardens, a dry courtyard of manzanita within.", "files": ["spanish-01.jpg", "spanish-02.jpg", "spanish-03.jpg", "spanish-04.jpg", "spanish-05.jpg", "spanish-06.jpg", "spanish-07.jpg", "spanish-08.jpg", "spanish-09.jpg"], "credit": "Photographs by Saxon Holt"}, {"slug": "century-city-1", "name": "Terraces on a Hillside", "place": "Century City", "line": "An unusable slope turned into flowering terraces for dining and conversation, with a pergola, a waterfall and a bird-friendly fountain.", "files": ["century-city-1-01.jpg", "century-city-1-02.jpg", "century-city-1-03.jpg", "century-city-1-04.jpg", "century-city-1-05.jpg", "century-city-1-06.jpg", "century-city-1-07.jpg", "century-city-1-08.jpg", "century-city-1-09.jpg", "century-city-1-10.jpg", "century-city-1-11.jpg", "century-city-1-12.jpg", "century-city-1-13.jpg", "century-city-1-14.jpg", "century-city-1-15.jpg", "century-city-1-16.jpg", "century-city-1-17.jpg"], "credit": "Photographs by Saxon Holt"}, {"slug": "palisades", "name": "Pacific Palisades Modern", "place": "Pacific Palisades", "line": "A modern house above the coast softened into its hillside: a meadow around an orchard, aloes and grass trees at the door.", "files": ["palisades-01.jpg", "palisades-02.jpg", "palisades-03.jpg", "palisades-04.jpg", "palisades-05.jpg", "palisades-06.jpg", "palisades-07.jpg", "palisades-08.jpg", "palisades-09.jpg", "palisades-10.jpg"], "credit": "Photographs by Saxon Holt"}, {"slug": "english", "name": "English Country Garden", "place": "Santa Monica", "line": "A front lawn turned flowering meadow that changes all year, with a rain garden to keep the winter storms.", "files": ["english-01.jpg", "english-02.jpg", "english-03.jpg", "english-04.jpg", "english-05.jpg", "english-06.jpg"], "credit": "Photographs by Saxon Holt"}, {"slug": "sm-median", "name": "Santa Monica Boulevard Median", "place": "Century City", "line": "Sixteen thousand square feet of median renewed around its plane trees: curving mat rush, blue chalk sticks, half the species native.", "files": ["sm-median-01.jpg", "sm-median-02.jpg", "sm-median-03.jpg", "sm-median-04.jpg", "sm-median-05.jpg", "sm-median-06.jpg", "sm-median-07.jpg"], "credit": "Photographs by Saxon Holt"}, {"slug": "stormcatcher", "name": "Stormcatcher Cisterns", "place": "Los Angeles", "line": "With TreePeople and the city: rain tanks and drought-resilient yards at six homes, a pilot for water from the sky instead of from far away.", "files": ["stormcatcher-01.jpg", "stormcatcher-02.jpg", "stormcatcher-03.jpg", "stormcatcher-04.jpg", "stormcatcher-05.jpg", "stormcatcher-06.jpg"], "credit": ""}, {"slug": "las-virgenes", "name": "Pure Water Sustainability Garden", "place": "Las Virgenes-Triunfo", "line": "Garden rooms around a water purification facility: lawn alternatives, rain gardens and an outdoor classroom. ASLA Southern California award, 2021.", "files": ["las-virgenes-01.jpg", "las-virgenes-02.jpg", "las-virgenes-03.jpg", "las-virgenes-04.jpg", "las-virgenes-05.jpg", "las-virgenes-06.jpg", "las-virgenes-07.jpg", "las-virgenes-08.jpg", "las-virgenes-09.jpg", "las-virgenes-10.jpg", "las-virgenes-11.jpg", "las-virgenes-12.jpg", "las-virgenes-13.jpg", "las-virgenes-14.jpg", "las-virgenes-15.jpg", "las-virgenes-16.jpg", "las-virgenes-17.jpg", "las-virgenes-18.jpg", "las-virgenes-19.jpg", "las-virgenes-20.jpg", "las-virgenes-21.jpg", "las-virgenes-22.jpg", "las-virgenes-23.jpg"], "credit": "Photographs by Saxon Holt"}];</script>
+
+<script>
+  // everything that arrives: on screen, add .in and the CSS does the rest
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -10% 0px' });
+  document.querySelectorAll('[data-in], .media, .line').forEach(el => io.observe(el));
+  // the curtain lifts once the first picture is in, never later than 1.6 s
+  const lift = () => { document.body.classList.add('ready'); document.querySelectorAll('.hero .line').forEach(l => l.classList.add('in')); };
+  const first = document.querySelector('.hero .slide img'); first.complete ? setTimeout(lift, 700) : first.addEventListener('load', () => setTimeout(lift, 500)); setTimeout(lift, 1600);
+  // the hero crossfades every 7 s under its slow zoom
+  const slides = [...document.querySelectorAll('.hero .slide')]; let s = 0;
+  setInterval(() => { slides[s].classList.remove('on'); s = (s + 1) % slides.length; const img = slides[s].querySelector('img'); img.style.transition = 'none'; img.style.transform = 'scale(1.14)'; img.offsetWidth; img.style.transition = ''; img.style.transform = ''; slides[s].classList.add('on'); }, 7000);
+  // per frame: the nav reads the section under it, the process track follows the scroll, the invite drifts, the mark focuses
+  const nav = document.getElementById('nav'), proc = document.querySelector('.process'), track = document.getElementById('track'), bar = document.getElementById('bar'), count = document.getElementById('count');
+  const lights = [...document.querySelectorAll('.light')], invite = document.getElementById('invitebg'), mark = document.getElementById('bigmark');
+  function frame() {
+    const y = scrollY, H = innerHeight;
+    nav.classList.toggle('solid', y > H * 0.6);
+    nav.classList.toggle('on-light', lights.some(l => { const r = l.getBoundingClientRect(); return r.top <= 40 && r.bottom >= 40; }));
+    const r = proc.getBoundingClientRect(), span = proc.offsetHeight - H, p = Math.min(1, Math.max(0, -r.top / (span || 1)));
+    const travel = Math.max(0, track.scrollWidth - innerWidth); track.style.transform = `translate3d(${-p * travel}px,0,0)`; bar.style.transform = `scaleX(${p})`;
+    const steps = track.children.length; count.textContent = `0${Math.min(steps, Math.floor(p * steps) + 1)} / 0${steps}`;
+    const ir = invite.parentElement.getBoundingClientRect(); invite.style.transform = `translate3d(0, ${(ir.top / H) * -8}%, 0)`;
+    const rest = document.documentElement.scrollHeight - (y + H), q = Math.min(1, Math.max(0, 1 - rest / (H * 0.55)));  // sharp at the very bottom mark.style.setProperty('--blur', `${(1 - q) * 14}px`); mark.style.setProperty('--fade', (0.25 + q * 0.75).toFixed(3));
+  }
+  // the pinned process is as tall as its sideways travel, so a screen of scroll moves a screen of steps
+  function sizeProcess() { proc.style.height = `${innerHeight + Math.max(0, track.scrollWidth - innerWidth)}px`; }
+  addEventListener('resize', () => { sizeProcess(); frame(); }); addEventListener('load', () => { sizeProcess(); frame(); }); sizeProcess();
+  // a garden opened: one photograph at a time, ← → or swipe, Esc closes; the page holds still behind it
+  const G = { p: null, i: 0, front: 0 }, gal = document.getElementById('gallery'), gimgs = [document.getElementById('gimg'), document.getElementById('gimg2')];
+  function gShow(i) { const p = G.p, n = p.files.length; G.i = (i + n) % n; const next = gimgs[1 - G.front], cur = gimgs[G.front]; const src = 'img/projects/' + p.files[G.i];
+    next.onload = () => { next.classList.add('show'); cur.classList.remove('show'); G.front = 1 - G.front; }; next.classList.remove('show'); next.src = src; next.alt = p.name + ', photograph ' + (G.i + 1);
+    document.getElementById('gcount').textContent = String(G.i + 1).padStart(2, '0') + ' / ' + String(n).padStart(2, '0');
+    document.querySelectorAll('#gthumbs img').forEach((t, k) => t.classList.toggle('on', k === G.i));
+    new Image().src = 'img/projects/' + p.files[(G.i + 1) % n]; }
+  function gOpen(k) { const p = PROJECTS[k]; G.p = p; document.getElementById('gname').textContent = p.name; document.getElementById('gplace').textContent = p.place; document.getElementById('gline').textContent = p.line; document.getElementById('gcredit').textContent = p.credit;
+    document.getElementById('gthumbs').innerHTML = p.files.map((f, k) => `<img src="img/projects/thumbs/${f}" alt="" loading="lazy" data-k="${k}">`).join('');
+    document.querySelectorAll('#gthumbs img').forEach(t => t.onclick = () => gShow(+t.dataset.k));
+    gimgs.forEach(g => { g.classList.remove('show'); g.removeAttribute('src'); }); gal.hidden = false; requestAnimationFrame(() => gal.classList.add('on')); if (window.__lenis) window.__lenis.stop(); document.documentElement.style.overflow = 'hidden'; gShow(0); document.getElementById('gclose').focus(); }
+  function gClose() { gal.classList.remove('on'); setTimeout(() => { gal.hidden = true; }, 600); if (window.__lenis) window.__lenis.start(); document.documentElement.style.overflow = ''; }
+  document.querySelectorAll('.proj').forEach(c => { c.tabIndex = 0; c.addEventListener('click', () => gOpen(+c.dataset.p)); c.addEventListener('keydown', e => { if (e.key === 'Enter') gOpen(+c.dataset.p); }); });
+  document.getElementById('gclose').onclick = gClose; document.getElementById('gprev').onclick = () => gShow(G.i - 1); document.getElementById('gnext').onclick = () => gShow(G.i + 1);
+  addEventListener('keydown', e => { if (gal.hidden) return; if (e.key === 'Escape') gClose(); if (e.key === 'ArrowRight') gShow(G.i + 1); if (e.key === 'ArrowLeft') gShow(G.i - 1); });
+  let tx = null; gal.addEventListener('touchstart', e => tx = e.touches[0].clientX, { passive: true }); gal.addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 40) gShow(G.i + (dx < 0 ? 1 : -1)); tx = null; });
+  document.querySelector('.menu').addEventListener('click', () => { const o = nav.classList.toggle('open'); document.querySelector('.menu').textContent = o ? 'Close' : 'Menu'; });
+  document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { nav.classList.remove('open'); document.querySelector('.menu').textContent = 'Menu'; const t = document.querySelector(a.getAttribute('href')); if (!t) return; e.preventDefault(); window.__lenis ? window.__lenis.scrollTo(t, { duration: 1.6 }) : t.scrollIntoView({ behavior: 'smooth' }); }));
+</script>
+<script type="module">
+  // smooth scroll the way kingriver.com.au does it: Lenis, a flick settles in about two thirds of a second (lerp 0.1)
+  let lenis = null;
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    try { const { default: Lenis } = await import('https://cdn.jsdelivr.net/npm/lenis@1.3.11/+esm'); lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1, smoothWheel: true }); window.__lenis = lenis; } catch (e) { /* offline: native scroll still works */ }
+  }
+  const loop = time => { if (lenis) lenis.raf(time); frame(); requestAnimationFrame(loop); }; requestAnimationFrame(loop);
+</script>
+</body>
+</html>
